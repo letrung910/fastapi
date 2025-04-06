@@ -5,7 +5,7 @@ from database import LocalSession
 from models.company import CompanyModel
 from sqlalchemy.orm import Session
 from schemas.company import Company
-
+from datetime import datetime
 router = APIRouter(prefix="/company",tags=["company"])
 
 def get_db_context():
@@ -27,5 +27,6 @@ async def get_company_id(company_id: UUID):
 @router.post("/createcompany", status_code=status.HTTP_201_CREATED)
 async def create_company(request: CompanyModel, db: Session = Depends(get_db_context)):
     company = Company(**request.dict())
+    company.created_at = datetime.utcnow()
     db.add(company)
     db.commit()
