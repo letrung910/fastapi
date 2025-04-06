@@ -15,27 +15,34 @@ services:
 
     # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
     network_mode: service:db
+    environment:
+      DB_ENGINE: postgresql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres11
+      DB_NAME: fastapi
 
     # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
   db:
-    image: postgres:latest
+    image: postgres:17
     restart: unless-stopped
     volumes:
       - postgres-data:/var/lib/postgresql/data
-    # ports:
-    #   - '5432:5432'
+    ports:
+      - '5432:5432'
     environment:
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: postgres11
 
   redis:
     image: redis:6.2-alpine
     restart: unless-stopped
-    # ports:
-    #   - '6379:6379'
+    ports:
+      - '6379:6379'
     command: redis-server --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
     volumes:
       - redis:/data
