@@ -30,7 +30,9 @@ def upgrade() -> None:
         sa.Column("last_name", sa.String, nullable=True),
         sa.Column("hashed_password", sa.String, nullable=False),
         sa.Column("is_active", sa.Boolean, nullable=False),
-        sa.Column("is_admin", sa.Boolean, nullable=False)
+        sa.Column("is_admin", sa.Boolean, nullable=False),
+        sa.Column("created_at", sa.DateTime, nullable=True),
+        sa.Column("updated_at", sa.DateTime, nullable=True)
         )
 
     op.create_foreign_key(

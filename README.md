@@ -1,7 +1,7 @@
 fastapi dev main.py
 fastapi run
 
-uvicorn books:app --reload
+uvicorn main:app --reload
 uvicorn main:app --workers 4
 
 ### alembic
