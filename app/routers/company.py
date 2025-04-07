@@ -6,14 +6,9 @@ from models.company import CompanyModel
 from sqlalchemy.orm import Session
 from schemas.company import Company
 from datetime import datetime
-router = APIRouter(prefix="/company",tags=["company"])
+from database import get_db_context
 
-def get_db_context():
-    try:
-        db = LocalSession()
-        yield db
-    finally:
-        db.close()
+router = APIRouter(prefix="/company",tags=["company"])
 
 @router.get("", response_model=list[CompanyModel], status_code=status.HTTP_200_OK)
 async def get_company(db: Session = Depends(get_db_context)):
