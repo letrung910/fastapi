@@ -25,7 +25,7 @@ def upgrade() -> None:
         sa.Column("id", sa.UUID, nullable=False, primary_key=True,index=True),
         sa.Column("name", sa.String, nullable=True),
         sa.Column("description", sa.String, nullable=True),
-        sa.Column("mode", sa.String, nullable=False),
+        sa.Column("mode", sa.Integer, nullable=False),
         sa.Column("rating", sa.Integer, nullable=False),
         sa.Column("created_at", sa.DateTime, nullable=True),
         sa.Column("updated_at", sa.DateTime, nullable=True)
