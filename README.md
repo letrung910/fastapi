@@ -18,3 +18,5 @@ alembic upgrade head
 \c fastapi
 \dt
 \d public.user
+
+openssl rand -hex 32
