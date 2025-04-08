@@ -7,7 +7,9 @@ class CompanyModel(BaseModel):
     description: Optional[str] = Field(description="Info about company")
     # id: UUID
     name: str = Field(min_length=1)
-    mode: int = Field(ge=0, le=3, default=0)
-    rating: int = Field(ge=0, le=3, default=0)
+    mode: int = Field(ge=0, le=10, default=0)
+    rating: int = Field(ge=0, le=10, default=0)
+    # created_at: Optional[datetime]
+    # updated_at: Optional[datetime]
     class Config:
         orm_mode: True

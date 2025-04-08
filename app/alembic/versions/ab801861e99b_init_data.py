@@ -42,7 +42,7 @@ def upgrade() -> None:
             "rating": 5,
             "created_at": datetime.utcnow(),
             "updated_at": datetime.utcnow()
-        }
+        },
     ])
 
     # user
