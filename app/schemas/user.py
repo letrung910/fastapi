@@ -5,7 +5,7 @@ from sqlalchemy import UUID, Column, Numeric, String
 
 class User(Base, BaseEntity):
     __tablename__ = "user"
-    # company_id = Column(UUID, nullable=False)
+    company_id = Column(UUID, nullable=False)
     email = Column(String, nullable=True)
     username = Column(String, nullable=False)
     # id = Column(UUID,nullable=False)

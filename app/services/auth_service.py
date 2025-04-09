@@ -27,10 +27,9 @@ def create_access_token(user: User, expires: Optional[timedelta] = None):
         "first_name": user.first_name,
         "last_name": user.last_name,
         "is_admin": user.is_admin,
-        "exp": datetime.utcnow()
+        "exp": datetime.utcnow() + (expires if expires else timedelta(minutes=15)),
     }
     return jwt.encode(claims, JWT_SECRET, algorithm=JWT_ALGORITHM)
-
 
 
 def token_interceptor(token: str = Depends(oa2_bearer), algorithm: str = JWT_ALGORITHM):

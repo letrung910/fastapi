@@ -4,6 +4,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from database import get_db_context
 from services import auth_service
+from datetime import timedelta
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post("/token")
@@ -20,9 +21,7 @@ async def login_for_access_token(
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    # create claims
-    token = auth_service.create_access_token(user)
-
+    token = auth_service.create_access_token(user, timedelta(minutes=30))
     return {
         "access_token": f"{token}",
         "token_type": "bearer"
