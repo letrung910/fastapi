@@ -32,9 +32,9 @@ def create_access_token(user: User, expires: Optional[timedelta] = None):
     return jwt.encode(claims, JWT_SECRET, algorithm=JWT_ALGORITHM)
 
 
-def token_interceptor(token: str = Depends(oa2_bearer), algorithm: str = JWT_ALGORITHM):
+def token_interceptor(token: str = Depends(oa2_bearer)):
     try:
-        payload = jwt.decode(token, JWT_SECRET, algorithms=[algorithm])
+        payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
         user = User()
         user.username: str = payload.get("sub")
         user.id: str = payload.get("id")
@@ -47,6 +47,7 @@ def token_interceptor(token: str = Depends(oa2_bearer), algorithm: str = JWT_ALG
                 detail="Could not validate credentials",
                 headers={"WWW-Authenticate": "Bearer"},
             )
+        return user
     except JWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
