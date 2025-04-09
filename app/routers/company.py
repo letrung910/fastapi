@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from schemas import Company, User
 from datetime import datetime
 from database import get_db_context
-from services import company_service, auth_service
+from services import company_service, auth_service, http_exception
 router = APIRouter(prefix="/company",tags=["company"])
 
 @router.get("", response_model=list[CompanyModel], status_code=status.HTTP_200_OK)
@@ -16,10 +16,7 @@ async def all_company(
         user: User = Depends(auth_service.token_interceptor)):
 
     if not User.is_admin:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="You do not have permission to access this resource",
-        )
+        http_exception.http_forbiden()
     results = db.query(Company).all()
     return results
 
@@ -30,20 +27,28 @@ async def get_company_id(
         user: User = Depends(auth_service.token_interceptor),
         db: Session = Depends(get_db_context)):
     if not User.is_admin:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="You do not have permission to access this resource",
-        )
+        http_exception.http_forbiden()
     results = db.query(Company).filter(Company.id == company_id)
     return results
 
 
 @router.post("/createcompany", status_code=status.HTTP_201_CREATED)
-async def create_company(request: CompanyModel , db: Session = Depends(get_db_context)):
+async def create_company(
+        request: CompanyModel,
+        user: User = Depends(auth_service.token_interceptor),
+        db: Session = Depends(get_db_context)):
+    if not User.is_admin:
+        http_exception.http_forbiden()
     results = company_service.create_company(request, db)
     return results
 
 @router.put("/updatecompany/{company_id}", status_code=status.HTTP_200_OK)
-async def update_company(company_id: UUID, request: CompanyModel, db: Session = Depends(get_db_context)):
+async def update_company(
+        company_id: UUID,
+        request: CompanyModel,
+        user: User = Depends(auth_service.token_interceptor),
+        db: Session = Depends(get_db_context)):
+    if not User.is_admin:
+        http_exception.http_forbiden()
     results = company_service.update_company(company_id, request, db)
     return results

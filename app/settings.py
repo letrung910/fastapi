@@ -24,7 +24,7 @@ ADMIN_DEFAULT_PASSWORD = os.environ.get("DEFAULT_PASSWORD", "admin")
 # JWT Setting
 JWT_SECRET = os.environ.get("JWT_SECRET")
 JWT_ALGORITHM = os.environ.get("JWT_ALGORITHM")
-
+REFRESH_TOKEN_EXPIRE_DAYS = os.environ.get("REFRESH_TOKEN_EXPIRE_DAYS", 30)
 
 # Redis settings
 redishost = os.environ.get("REDIS_HOST", "redis")
