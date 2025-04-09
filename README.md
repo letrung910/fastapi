@@ -20,3 +20,4 @@ alembic upgrade head
 \d public.user
 
 openssl rand -hex 32
+
