@@ -39,7 +39,7 @@ async def get_user_id(
         raise http_forbidden()
     return user_service.get_user_by_id(user_id, db)
 
-@router.put("/updateuser/{user_id}", status_code=status.HTTP_200_OK)
+@router.put("/{user_id}", status_code=status.HTTP_200_OK)
 async def update_user(
         user_id: UUID,
         request: UpdateUserModel,
@@ -60,7 +60,7 @@ async def update_password_user(
         raise http_forbidden()
     return user_service.update_password_user(user_id, request, db)
 
-@router.delete("/deleteuser/{user_id}", status_code=status.HTTP_200_OK)
+@router.delete("/{user_id}", status_code=status.HTTP_200_OK)
 async def delete_user(
         user_id: UUID,
         db: Session = Depends(get_db_context),
