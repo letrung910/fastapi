@@ -23,7 +23,9 @@ services:
       DB_PASSWORD: postgres11
       DB_NAME: fastapi
       JWT_ALGORITHM: HS256
-
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_DB: 0
     # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 

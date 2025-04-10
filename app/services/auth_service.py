@@ -27,6 +27,7 @@ def create_access_token(user: User, expires: Optional[timedelta] = None):
     claims = {
         "sub": user.username,
         "id" : str(user.id),
+        "company_id": str(user.company_id),
         "first_name": user.first_name,
         "last_name": user.last_name,
         "is_admin": user.is_admin,
@@ -159,11 +160,12 @@ def token_interceptor(token: str = Depends(oa2_bearer)):
     try:
         payload = jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
         user = User()
-        user.username: str = payload.get("sub")
-        user.id: str = payload.get("id")
-        user.first_name: str = payload.get("first_name")
-        user.last_name: str = payload.get("last_name")
-        user.is_admin: str = payload.get("is_admin")
+        user.username = payload.get("sub")
+        user.id = payload.get("id")
+        user.company_id = payload.get("company_id")
+        user.first_name = payload.get("first_name")
+        user.last_name = payload.get("last_name")
+        user.is_admin = payload.get("is_admin")
         if user.username is None:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,

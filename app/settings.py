@@ -29,7 +29,7 @@ REFRESH_TOKEN_EXPIRE_DAYS = os.environ.get("REFRESH_TOKEN_EXPIRE_DAYS", 30)
 # Redis settings
 redishost = os.environ.get("REDIS_HOST", "redis")
 redisport = os.environ.get("REDIS_PORT", 6379)
-redispass = os.environ.get("REDIS_PASS", "eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81")
+redispass = os.environ.get("REDIS_PASS", "")
 redisdb = os.environ.get("REDIS_DB", 0)
 
 # Initialize Redis connection
