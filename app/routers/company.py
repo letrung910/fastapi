@@ -55,3 +55,4 @@ async def update_company(
         raise http_forbidden()
     results = company_service.update_company(company_id, request, db)
     return results
+

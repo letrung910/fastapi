@@ -9,7 +9,7 @@ class CompanyModel(BaseModel):
     name: str = Field(min_length=1)
     mode: int = Field(ge=0, le=10, default=0)
     rating: int = Field(ge=0, le=10, default=0)
-    # created_at: Optional[datetime]
-    # updated_at: Optional[datetime]
+    created_at: Optional[datetime]
+    updated_at: Optional[datetime]
     class Config:
         orm_mode: True

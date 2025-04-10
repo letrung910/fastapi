@@ -4,7 +4,7 @@ from schemas import User
 from .hash_service import verify_password
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
-from settings import JWT_SECRET, JWT_ALGORITHM, REFRESH_TOKEN_EXPIRE_DAYS
+from settings import JWT_SECRET, JWT_ALGORITHM, REFRESH_TOKEN_EXPIRE_DAYS, ACCESS_TOKEN_EXPIRE_MINUTES
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException, status
 import uuid
@@ -31,7 +31,7 @@ def create_access_token(user: User, expires: Optional[timedelta] = None):
         "first_name": user.first_name,
         "last_name": user.last_name,
         "is_admin": user.is_admin,
-        "exp": datetime.utcnow() + (expires if expires else timedelta(minutes=15)),
+        "exp": datetime.utcnow() + (expires if expires else timedelta(minutes=float(ACCESS_TOKEN_EXPIRE_MINUTES))),
     }
     return jwt.encode(claims, JWT_SECRET, algorithm=JWT_ALGORITHM)
 
@@ -39,7 +39,7 @@ def create_access_token(user: User, expires: Optional[timedelta] = None):
 def create_refresh_token(user: User, expires: Optional[timedelta] = None):
     token_jti = str(uuid.uuid4())  # Generate unique token ID
     expires_delta = expires if expires else timedelta(
-        days=REFRESH_TOKEN_EXPIRE_DAYS)
+        days=float(REFRESH_TOKEN_EXPIRE_DAYS))
     exp = datetime.utcnow() + expires_delta
 
     claims = {
