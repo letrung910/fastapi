@@ -74,12 +74,23 @@ def get_user_by_id(id: UUID, db: Session):
         return f"User with id {id} not found"
     return user
 
-
-def get_user_by_username(username: str, db: Session):
-    user = db.query(User).filter(User.username == username).first()
+def get_company_id_by_user_id(id: UUID, db: Session):
+    user = db.query(User).filter(User.id == id).first()
     if not user:
         return f"User with id {id} not found"
-    return user
+    return user.company_id
+
+def get_user_by_company_id(company_id: UUID, db: Session):
+    # Query only the id column from users with matching company_id
+    user_ids = db.query(User.id).filter(User.company_id == company_id).all()
+    if not user_ids:
+        return f"User with company id {company_id} not found"
+
+    # Extract the IDs from the result tuples
+    result_ids = [user_id[0] for user_id in user_ids]
+    print(f"list user ids: {result_ids}")
+    return result_ids
+
 
 def get_all_users(model: UserModel, db: Session):
     users = db.query(User).all()

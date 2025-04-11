@@ -13,11 +13,10 @@ router = APIRouter(prefix="/company",tags=["company"])
 
 @router.get("", response_model=list[CompanyModel], status_code=status.HTTP_200_OK)
 async def all_company(
-        db: Session = Depends(get_db_context),
-        user: User = Depends(auth_service.token_interceptor)):
+        db: Session = Depends(get_db_context)):
 
-    if not user.is_admin:
-        raise http_forbidden()
+    # if not user.is_admin:
+    #     raise http_forbidden()
     results = db.query(Company).all()
     return results
 

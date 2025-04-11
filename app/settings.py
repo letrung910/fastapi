@@ -42,6 +42,6 @@ redis_client = redis.Redis(
 )
 
 # Test connection
-redis_client.set('foo', 'bar2')
-value = redis_client.get('foo')  # Should return 'bar2'
-print(value)
+# redis_client.set('foo', 'bar2')
+# value = redis_client.get('foo')  # Should return 'bar2'
+# print(value)

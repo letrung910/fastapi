@@ -31,6 +31,7 @@ def create_access_token(user: User, expires: Optional[timedelta] = None):
         "first_name": user.first_name,
         "last_name": user.last_name,
         "is_admin": user.is_admin,
+        "is_active": user.is_active,
         "exp": datetime.utcnow() + (expires if expires else timedelta(minutes=float(ACCESS_TOKEN_EXPIRE_MINUTES))),
     }
     return jwt.encode(claims, JWT_SECRET, algorithm=JWT_ALGORITHM)
@@ -166,6 +167,7 @@ def token_interceptor(token: str = Depends(oa2_bearer)):
         user.first_name = payload.get("first_name")
         user.last_name = payload.get("last_name")
         user.is_admin = payload.get("is_admin")
+        user.is_active = payload.get("is_active")
         if user.username is None:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,

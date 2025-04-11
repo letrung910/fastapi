@@ -9,7 +9,8 @@ from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
-
+from schemas.task import TaskStatus
+from sqlalchemy import Enum
 
 # revision identifiers, used by Alembic.
 revision: str = '791792fa7e6b'
@@ -26,8 +27,8 @@ def upgrade() -> None:
         sa.Column("user_id", sa.UUID, nullable=True),
         sa.Column("summary", sa.String, nullable= True),
         sa.Column("description", sa.String, nullable=True),
-        sa.Column("status", sa.String, nullable=False),
-        sa.Column("priority", sa.String, nullable=False),
+        sa.Column("status", sa.Enum(TaskStatus), nullable=False),
+        sa.Column("priority", sa.Integer, nullable=False),
         sa.Column("created_at", sa.DateTime, nullable=True),
         sa.Column("updated_at", sa.DateTime, nullable=True)
     )
