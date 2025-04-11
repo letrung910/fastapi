@@ -1,23 +1,23 @@
-fastapi dev main.py
-fastapi run
+# Stack
+Backend: Fastapi
 
-uvicorn main:app --reload
-uvicorn main:app --workers 4
+Database: Postgres
 
-### alembic
-alembic revision -m "generate company table"
-alembic revision -m "generate user table"
-alembic revision -m "generate task table"
-alembic upgrade <revesionid>
+Cache: Redis
 
-alembic downgrade base
-alembic upgrade head
+Authorization: JWT
 
+## Run on devcontainer
+https://code.visualstudio.com/docs/devcontainers/containers
+## Run on docker compose
+update environment on docker-compose.yaml
 
-\l
-\c fastapi
-\dt
-\d public.user
+```
+      JWT_SECRET: replaceme
+      DEFAULT_PASSWORD: replaceme
+      REDIS_PASS: replaceme
+```
 
-openssl rand -hex 32
+![screenshot](img/1.png)
 
+![screenshot](img/2.png)
