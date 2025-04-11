@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 import redis
+from distutils.util import strtobool
 
 
 load_dotenv()
@@ -17,7 +18,7 @@ def get_connection_string():
 
 
 # Database Setting
-SQLALCHEMY_DATABASE_DEBUG = os.environ.get("DB_DEBUG", True)
+SQLALCHEMY_DATABASE_DEBUG = bool(strtobool(os.getenv('DB_DEBUG', 'True')))
 SQLALCHEMY_DATABASE_URL = get_connection_string()
 ADMIN_DEFAULT_PASSWORD = os.environ.get("DEFAULT_PASSWORD", "admin")
 

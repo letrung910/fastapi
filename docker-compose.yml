@@ -3,18 +3,9 @@ version: '3.8'
 services:
   app:
     build:
-      context: ..
-      dockerfile: .devcontainer/Dockerfile
-
-    volumes:
-      - ../..:/workspaces:cached
-    # ports:
-    #   - '8001:8000'
-    # Overrides default command so things don't shut down after the process ends.
-    command: sleep infinity
-
-    # Runs app on the same network as the database container, allows "forwardPorts" in devcontainer.json function.
-    network_mode: service:db
+      context: .
+    ports:
+      - '80:80'
     environment:
       DB_ENGINE: postgresql
       DB_HOST: db
@@ -29,8 +20,6 @@ services:
       REDIS_HOST: redis
       REDIS_PORT: 6379
       REDIS_DB: 0
-    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
-    # (Adding the "ports" property to this file will not forward from a Codespace.)
 
   db:
     image: postgres:17
@@ -52,9 +41,6 @@ services:
     command: redis-server --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
     volumes:
       - redis:/data
-
-    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
-    # (Adding the "ports" property to this file will not forward from a Codespace.)
 
 volumes:
   postgres-data:
